@@ -115,6 +115,126 @@ public class ImplementationExample {
     }
   }
 
+  public ISOMsg cancel(String UPC) {
+    String uri = "/isoxml/activateProduct/cancel";
+    String dateTime = "2017-06-22T14:57:28.999Z";
+    String contentType = "application/xml;charset=UTF-8";
+    String accept = "application/xml;version=1";
+    String sign = generateSign(accessKey, accessId, uri, dateTime, contentType, accept);
+    String body = generateCancelXML(UPC);
+
+    HttpPost httpPost = new HttpPost("https://skywayp.olstest.com:444" + uri);
+    httpPost.addHeader("X-InComm-DateTime", dateTime);
+    httpPost.addHeader("Content-Type", contentType);
+    httpPost.addHeader("Accept", accept);
+    httpPost.addHeader("Authorization", sign);
+
+    try {
+      httpPost.setEntity(new StringEntity(body));
+      HttpResponse response = HttpClients.createDefault().execute(httpPost);
+
+      // Uses jPos to unmarshal the message
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.unpack(response.getEntity().getContent());
+
+      return message;
+
+    } catch (IOException | ISOException e) {
+      return null;
+    }
+  }
+
+  public ISOMsg echo() {
+    String uri = "/isoxml/echoTest";
+    String dateTime = "2017-06-22T14:57:28.999Z";
+    String contentType = "application/xml;charset=UTF-8";
+    String accept = "application/xml;version=1";
+    String sign = generateSign(accessKey, accessId, uri, dateTime, contentType, accept);
+    String body = generateEchoXML();
+
+    HttpPost httpPost = new HttpPost("https://skywayp.olstest.com:444" + uri);
+    httpPost.addHeader("X-InComm-DateTime", dateTime);
+    httpPost.addHeader("Content-Type", contentType);
+    httpPost.addHeader("Accept", accept);
+    httpPost.addHeader("Authorization", sign);
+
+    try {
+      httpPost.setEntity(new StringEntity(body));
+      HttpResponse response = HttpClients.createDefault().execute(httpPost);
+
+      // Uses jPos to unmarshal the message
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.unpack(response.getEntity().getContent());
+
+      return message;
+
+    } catch (IOException | ISOException e) {
+      return null;
+    }
+  }
+
+  public ISOMsg deactivateProduct(String UPC) {
+    String uri = "/isoxml/deactivateProduct";
+    String dateTime = "2017-06-22T14:57:28.999Z";
+    String contentType = "application/xml;charset=UTF-8";
+    String accept = "application/xml;version=1";
+    String sign = generateSign(accessKey, accessId, uri, dateTime, contentType, accept);
+    String body = generateDeactivateProductXML(UPC);
+
+    HttpPost httpPost = new HttpPost("https://skywayp.olstest.com:444" + uri);
+    httpPost.addHeader("X-InComm-DateTime", dateTime);
+    httpPost.addHeader("Content-Type", contentType);
+    httpPost.addHeader("Accept", accept);
+    httpPost.addHeader("Authorization", sign);
+
+    try {
+      httpPost.setEntity(new StringEntity(body));
+      HttpResponse response = HttpClients.createDefault().execute(httpPost);
+
+      // Uses jPos to unmarshal the message
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.unpack(response.getEntity().getContent());
+
+      return message;
+
+    } catch (IOException | ISOException e) {
+      return null;
+    }
+  }
+
+  public ISOMsg cancelDeactivateProduct(String UPC) {
+    String uri = "/isoxml/deactivateProduct/cancel";
+    String dateTime = "2017-06-22T14:57:28.999Z";
+    String contentType = "application/xml;charset=UTF-8";
+    String accept = "application/xml;version=1";
+    String sign = generateSign(accessKey, accessId, uri, dateTime, contentType, accept);
+    String body = generateCancelDeactivateProductXML(UPC);
+
+    HttpPost httpPost = new HttpPost("https://skywayp.olstest.com:444" + uri);
+    httpPost.addHeader("X-InComm-DateTime", dateTime);
+    httpPost.addHeader("Content-Type", contentType);
+    httpPost.addHeader("Accept", accept);
+    httpPost.addHeader("Authorization", sign);
+
+    try {
+      httpPost.setEntity(new StringEntity(body));
+      HttpResponse response = HttpClients.createDefault().execute(httpPost);
+
+      // Uses jPos to unmarshal the message
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.unpack(response.getEntity().getContent());
+
+      return message;
+
+    } catch (IOException | ISOException e) {
+      return null;
+    }
+  }
+
   public ISOMessage itemQualification(String UPC) {
     String uri = "/isoxml/itemQualification";
     String dateTime = "2017-06-22T14:57:28.999Z";
@@ -192,6 +312,120 @@ public class ImplementationExample {
       message.set(42, storeName);
       message.set(49, "USD");
       message.set(54, upc);
+      message.set(f125);
+
+      return new String(message.pack());
+
+    } catch (ISOException e) {
+      return null;
+    }
+  }
+
+  private String generateCancelXML(String upc) {
+    try {
+      ISOMsg f125 = new ISOMsg(125);
+      f125.set(0, "OFF");
+      f125.set(2, "0006277006720279092");
+      f125.set(14, "4912");
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.set(0, "0400");
+      message.set(3, "189090");
+      message.set(4, "000008000000");
+      message.set(7, "20180221T124514Z");
+      message.set(11, "591299165119");
+      message.set(12, "124418-0500");
+      message.set(13, "20180221");
+      message.set(22, "030");
+      message.set(32, acquirerId);
+      message.set(37, "591299165119");
+      message.set(41, "12345123");
+      message.set(42, storeName);
+      message.set(49, "USD");
+      message.set(54, upc);
+      message.set(f125);
+
+      return new String(message.pack());
+
+    } catch (ISOException e) {
+      return null;
+    }
+  }
+
+  private String generateEchoXML() {
+    try {
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.set(0, "0800");
+      message.set(3, "319090");
+      message.set(4, "000000000000");
+      message.set(7, "20170725T141701Z");
+      message.set(11, "000000000427");
+      message.set(12, "084703-0600");
+      message.set(13, "20180219");
+      message.set(32, acquirerId);
+      message.set(37, "000000000427");
+
+      return new String(message.pack());
+
+    } catch (ISOException e) {
+      return null;
+    }
+  }
+
+  private String generateDeactivateProductXML(String upc) {
+    try {
+      ISOMsg f125 = new ISOMsg(125);
+      f125.set(0, "OFF");
+      f125.set(2, "0006277006720279092");
+      f125.set(14, "4912");
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.set(0, "0200");
+      message.set(3, "289090");
+      message.set(4, "000008000000");
+      message.set(7, "20170725T141701Z");
+      message.set(11, "944109960928");
+      message.set(12, "084703-0600");
+      message.set(13, "20180219");
+      message.set(22, "030");
+      message.set(32, acquirerId);
+      message.set(37, "944109960928");
+      message.set(41, "12345123");
+      message.set(42, "CodeStore");
+      message.set(49, "USD");
+      message.set(54, "79936614516");
+      message.set(f125);
+
+      return new String(message.pack());
+
+    } catch (ISOException e) {
+      return null;
+    }
+  }
+
+  private String generateCancelDeactivateProductXML(String upc) {
+    try {
+      ISOMsg f125 = new ISOMsg(125);
+      f125.set(0, "OFF");
+      f125.set(2, "0006277006720279092");
+      f125.set(14, "4912");
+      ISOMsg message = new ISOMsg();
+      message.setPackager(new XMLPackager());
+      message.set(0, "0400");
+      message.set(3, "289090");
+      message.set(4, "000008000000");
+      message.set(7, "20170725T141701Z");
+      message.set(11, "000000000427");
+      message.set(12, "084703-0600");
+      message.set(13, "20180219");
+      message.set(22, "030");
+      message.set(32, acquirerId);
+      message.set(37, "000000000427");
+      message.set(41, "12345123");
+      message.set(42, "CodeStore");
+      message.set(49, "USD");
+      message.set(54, "79936614516");
       message.set(f125);
 
       return new String(message.pack());

@@ -16,7 +16,13 @@ public class TestImplementationExample {
     // To get the credentials you can leverage the listStores endpoint with the includeCreds parameter
     implementation.addStore("CodeStore");
 
+    ISOMsg echoResponse = implementation.echo();
+
     ISOMsg apResponse = implementation.activateProduct("79936614516");
+    ISOMsg cancelResponse = implementation.cancel("79936614516");
+
+    ISOMsg dpResponse = implementation.deactivateProduct("79936614516");
+    ISOMsg cancelDpResponse = implementation.cancelDeactivateProduct("79936614516");
 
     ISOMessage iqResponse = implementation.itemQualification("79936614516");
   }
@@ -31,7 +37,13 @@ public class TestImplementationExample {
     String storeAccessId = "";
     ImplementationExample implementation = new ImplementationExample("CodeStore", storeAccessKey, storeAccessId);
 
+    ISOMsg echoResponse = implementation.echo();
+
     ISOMsg apResponse = implementation.activateProduct("79936614516");
+    ISOMsg cancelResponse = implementation.cancel("79936614516");
+
+    ISOMsg dpResponse = implementation.deactivateProduct("79936614516");
+    ISOMsg cancelDpResponse = implementation.cancelDeactivateProduct("79936614516");
 
     ISOMessage iqResponse = implementation.itemQualification("79936614516");
   }
