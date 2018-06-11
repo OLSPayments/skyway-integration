@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public class TestImplementationExample {
 
-  String storeName;
-
   @Test
   public void testWorkflow() {
     ImplementationExample implementation = new ImplementationExample();
